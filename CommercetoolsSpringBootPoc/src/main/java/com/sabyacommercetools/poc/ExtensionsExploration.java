@@ -34,7 +34,7 @@ public class ExtensionsExploration {
 
         ExtensionDestination destination = ExtensionHttpDestinationBuilder.of()
 
-                .url("https://45652bdfb87217.localhost.run/extension13")
+                .url("https://439dd870fd7b38.localhost.run/extension")
                 .build();
 
         ExtensionTrigger trigger = ExtensionTriggerBuilder.of()
