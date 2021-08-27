@@ -1,32 +1,29 @@
 package com.sabyacommercetools.poc;
 
-import com.commercetools.api.client.ApiRoot;
-import com.commercetools.api.defaultconfig.ApiFactory;
-import com.commercetools.api.defaultconfig.ServiceRegion;
-import io.vrap.rmf.base.client.oauth2.ClientCredentials;
+
+import com.sabyacommercetools.marut.controllers.merchant.ProductImporter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.Environment;
 
-@SpringBootApplication
+import java.io.FileNotFoundException;
+import java.util.concurrent.*;
+
+@SpringBootApplication(scanBasePackages = "com.sabyacommercetools")
 public class PocApplication {
 
 	@Autowired
 	private Environment env;
 
-	public static void main(String[] args) {
+	@Autowired
+	ProductImporter productImporter;
 
-		ApplicationContext context = SpringApplication.run(PocApplication.class, args);
+	public static void main(String[] args) throws FileNotFoundException {
 
+		ConfigurableApplicationContext context = SpringApplication.run(PocApplication.class, args);
 
-
-
-
+		context.getBean(ProductImporter.class).importProducts();
 	}
 }

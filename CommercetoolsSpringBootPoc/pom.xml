@@ -50,17 +50,70 @@
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/com.graphql-java/graphql-java -->
+<!--		<dependency>-->
+<!--			<groupId>com.graphql-java</groupId>-->
+<!--			<artifactId>graphql-java</artifactId>-->
+<!--		</dependency>-->
+
+		<dependency>
+			<groupId>io.aexp.nodes.graphql</groupId>
+			<artifactId>nodes</artifactId>
+			<version>0.4.0-atlassian-hosted</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/io.aexp.nodes.graphql/parent -->
+<!--		<dependency>-->
+<!--			<groupId>io.aexp.nodes.graphql</groupId>-->
+<!--			<artifactId>parent</artifactId>-->
+<!--			<version>0.5.0</version>-->
+<!--		</dependency>-->
+
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-ui</artifactId>
+			<version>1.5.10</version>
+		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.datatype/jackson-datatype-jsr310 -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.datatype</groupId>
 			<artifactId>jackson-datatype-jsr310</artifactId>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.opencsv/opencsv -->
+		<dependency>
+			<groupId>com.opencsv</groupId>
+			<artifactId>opencsv</artifactId>
+			<version>5.5.1</version>
+		</dependency>
+
+
+
 	</dependencies>
+
+	<repositories>
+		<repository>
+			<id>atlassian</id>
+			<url>https://packages.atlassian.com/maven-3rdparty/</url>
+		</repository>
+	</repositories>
+
 
 	<build>
 		<plugins>

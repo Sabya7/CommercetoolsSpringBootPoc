@@ -127,6 +127,7 @@ public class ExtensionsExploration {
         CustomerSetFirstNameAction custAction =
                 CustomerSetFirstNameActionBuilder.of().firstName("Sabya").build();
 
+
         CustomerUpdateAction customerUpdateAction = CustomerSetFirstNameAction.of()
                 .withCustomerSetFirstNameAction(a -> custAction);
 
