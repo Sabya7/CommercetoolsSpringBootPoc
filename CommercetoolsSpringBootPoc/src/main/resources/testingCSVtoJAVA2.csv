@@ -1,0 +1,8 @@
+﻿Date,key,sku,isMasterVariant,product,attributes,
+,key-301,Var-301,Yes,sneakersKing,sizes;num;06  color;text;pink,
+,key-302,Var-302,No,sneakersKing,sizes;num;08  color;text;black01,
+,key-303,Var-303,No,sneakersKing,sizes;num;07  color;text;black02,
+,key-304,Var-304,No,sneakersKing,sizes;num;09  color;text;black03,
+,key-305,Var-305,No,sneakersKing,sizes;num;07  color;text;black04,
+,key-306,Var-306,No,sneakersKing,sizes;num;10  color;text;black05,
+,key-307,Var-307,No,sneakersKing,sizes;num;04  color;text;black06,

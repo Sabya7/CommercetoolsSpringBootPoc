@@ -1,16 +1,15 @@
 package com.sabyacommercetools.marut.controllers.merchant;
 
-
 import com.commercetools.importapi.client.ApiRoot;
 import com.commercetools.importapi.models.importoperations.ImportOperationPagedResponse;
-import com.commercetools.importapi.models.importrequests.ProductImportRequestBuilder;
+import com.commercetools.importapi.models.importrequests.ProductVariantImportRequestBuilder;
 import com.commercetools.importapi.models.importsinks.ImportSink;
-import com.commercetools.importapi.models.products.ProductImport;
-import com.commercetools.importapi.models.products.ProductImportBuilder;
+import com.commercetools.importapi.models.productvariants.ProductVariantImport;
+import com.commercetools.importapi.models.productvariants.ProductVariantImportBuilder;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 import com.opencsv.bean.HeaderColumnNameMappingStrategy;
-import com.sabyacommercetools.marut.model.ProductImportModel;
+import com.sabyacommercetools.marut.model.ProductVariantImportModel;
 import com.sabyacommercetools.marut.util.GroupingCollector;
 import io.vrap.rmf.base.client.ApiHttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +25,8 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
-
 @RestController
-public class ProductImporter {
+public class ProductVariantImporter {
 
     @Autowired
     ApiRoot clientImpTraining;
@@ -40,43 +38,43 @@ public class ProductImporter {
     ImportSink importSink;
 
     //@RequestParam("csv") MultipartFile csv
-    @RequestMapping("/importProducts")
-    public void importProducts() throws FileNotFoundException, ExecutionException, InterruptedException {
+    @RequestMapping("/importProductVariants")
+    public void importProductVariants() throws FileNotFoundException, ExecutionException, InterruptedException {
 
         //Step-1 : parse the CSV file.
         File csv = ResourceUtils.getFile("classpath:testingCSVtoJAVA.csv");
 
-        HeaderColumnNameMappingStrategy<ProductImportModel> strategy
+        HeaderColumnNameMappingStrategy<ProductVariantImportModel> strategy
                 = new HeaderColumnNameMappingStrategy<>();
-        strategy.setType(ProductImportModel.class);
+        strategy.setType(ProductVariantImportModel.class);
 
 
-        CsvToBean<ProductImportModel> csvToBean =
-                new CsvToBeanBuilder<ProductImportModel>(new FileReader(csv))
+        CsvToBean<ProductVariantImportModel> csvToBean =
+                new CsvToBeanBuilder<ProductVariantImportModel>(new FileReader(csv))
                         .withMappingStrategy(strategy)
                         .build();
 
-        List<List<ProductImport>> productImportLists =
-                csvToBean.stream().parallel().map(productImportModel ->
-                        ProductImportBuilder.of()
-                                .key(productImportModel.getKey())
-                                .name(productImportModel.getName())
-                                .productType(productImportModel.getProductType())
-                                .slug(productImportModel.getSlug())
-                                .categories(productImportModel.getCategories())
+        List<List<ProductVariantImport>> productVariantImportLists =
+                csvToBean.stream().parallel().map(productVariantImportModel ->
+                        ProductVariantImportBuilder.of()
+                                .key(productVariantImportModel.getKey())
+                                .sku(productVariantImportModel.getSku())
+                                .isMasterVariant(productVariantImportModel.getIsMasterVariant())
+                                .product(productVariantImportModel.getProduct())
+                                .attributes(productVariantImportModel.getAttributes())
                                 .build()
                 ).collect(new GroupingCollector<>(20));
 
 
-        for (List<ProductImport> productImportList : productImportLists) {
+        for (List<ProductVariantImport> productVariantImportList : productVariantImportLists) {
 
 
             clientImpTraining.withProjectKeyValue(project)
-                    .products()
+                    .productVariants()
                     .importSinkKeyWithImportSinkKeyValue(importSink.getKey())
                     .post(
-                            ProductImportRequestBuilder.of()
-                                    .resources(productImportList)
+                            ProductVariantImportRequestBuilder.of()
+                                    .resources(productVariantImportList)
                                     .build()
                     ).execute();
 
@@ -85,11 +83,11 @@ public class ProductImporter {
 
     }
 
-    @RequestMapping("/queryProductImportOperations")
+    @RequestMapping("/queryProductVariantImportOperations")
     public ApiHttpResponse<ImportOperationPagedResponse> queryImportOperations() throws ExecutionException, InterruptedException {
 
         CompletableFuture<ApiHttpResponse<ImportOperationPagedResponse>> imoprtOperationResponse = clientImpTraining.withProjectKeyValue(project)
-                .products()
+                .productVariants()
                 .importSinkKeyWithImportSinkKeyValue(importSink.getKey())
                 .importOperations()
                 .get().withLimit(10000.0).execute();
@@ -99,3 +97,4 @@ public class ProductImporter {
 
 
 }
+

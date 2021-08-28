@@ -26,7 +26,7 @@ import java.util.concurrent.ExecutionException;
 * */
 
 @RestController
-public class CustomerApi implements InitializingBean {
+public class CustomerApi {
 
     //http client to connect to commercetools API
     @Autowired
@@ -167,8 +167,4 @@ public class CustomerApi implements InitializingBean {
                 .execute();
     }
 
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        System.out.println("Hey Sabya");
-    }
 }
